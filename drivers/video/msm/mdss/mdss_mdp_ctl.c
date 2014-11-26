@@ -842,6 +842,9 @@ static inline void mdss_mdp_ctl_perf_update_bus(struct mdss_mdp_ctl *ctl)
 	u64 bus_ab_quota, bus_ib_quota;
 	struct mdss_data_type *mdata;
 	int i;
+#if defined(CONFIG_FB_MSM_MIPI_SAMSUNG_OCTA_VIDEO_FULL_HD_PT_PANEL)
+	u64 min_bus_ab_quota = 1103984640 , min_bus_ib_quota = 827988480;
+#endif
 
 	if (!ctl || !ctl->mdata)
 		return;
@@ -860,6 +863,12 @@ static inline void mdss_mdp_ctl_perf_update_bus(struct mdss_mdp_ctl *ctl)
 	bus_ab_quota = apply_fudge_factor(bus_ib_quota,
 		&mdss_res->ab_factor);
 	hdmi_hpd_status();
+#if defined(CONFIG_FB_MSM_MIPI_SAMSUNG_OCTA_VIDEO_FULL_HD_PT_PANEL)
+	if (bus_ab_quota < min_bus_ab_quota)
+		bus_ab_quota = min_bus_ab_quota;
+	if (bus_ib_quota < min_bus_ib_quota)
+		bus_ib_quota = min_bus_ib_quota;
+#endif
 	mdss_bus_scale_set_quota(MDSS_HW_MDP, bus_ab_quota, bus_ib_quota);
 	pr_debug("ab=%llu ib=%llu\n", bus_ab_quota, bus_ib_quota);
 }
@@ -1578,11 +1587,7 @@ struct mdss_mdp_ctl *mdss_mdp_ctl_init(struct mdss_panel_data *pdata,
 
 		switch (pdata->panel_info.bpp) {
 		case 18:
-			if (ctl->intf_type == MDSS_INTF_DSI)
-				ctl->dst_format = MDSS_MDP_PANEL_FORMAT_RGB666 |
-					MDSS_MDP_PANEL_FORMAT_PACK_ALIGN_MSB;
-			else
-				ctl->dst_format = MDSS_MDP_PANEL_FORMAT_RGB666;
+			ctl->dst_format = MDSS_MDP_PANEL_FORMAT_RGB666;
 			dither.flags = MDP_PP_OPS_ENABLE | MDP_PP_OPS_WRITE;
 			dither.g_y_depth = 2;
 			dither.r_cr_depth = 2;
