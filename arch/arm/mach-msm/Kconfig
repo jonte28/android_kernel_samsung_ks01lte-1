@@ -1891,34 +1891,6 @@ config MACH_H3G_CHN_OPEN
 	help
 	  Support for Samsung H3G CHN OPEN device.
 	  
-config MACH_H3G_CHN_CMCC
-	default n
-	bool "Samsung model H3G_CHN_CMCC"
-	select SEC_H_PROJECT
-	help
-	  Support for Samsung H3G_CHN_CMCC device.
-
-config MACH_H3GDUOS_CTC
-	default n
-	bool "Samsung model H3GDUOS_CTC"
-	select SEC_H_PROJECT
-	help
-	  Support for Samsung H3GDUOS_CTC device.
-
-config MACH_H3GDUOS
-	default n
-	bool "Samsung model H3GDUOS"
-	select SEC_H_PROJECT
-	help
-	  Support for Samsung H3GDUOS device.	  
-
-config MACH_H3GDUOS_CU
-	default n
-	bool "Samsung model H3GDUOS_CU"
-	select SEC_H_PROJECT
-	help
-	  Support for Samsung H3GDUOS_CU device.  
-	  
 config MACH_HLTESPR
 	default n
 	bool "Samsung model HLTESPR"
@@ -4177,11 +4149,6 @@ config SEC_SSR_DEBUG_LEVEL_CHK
         help
           To check the level of debug for SSR.
 
-config SEC_PERIPHERAL_SECURE_CHK
-        bool "PERIPHERAL SECURE check"
-        help
-          To check the authentication of peripheral image.
-
 config MSM_DCVS
 	bool "Use MSM DCVS for CPU/GPU Frequency control"
 	depends on MSM_SCM
@@ -4360,13 +4327,9 @@ config WALL_CLK_SYSFS
 
 config I2C_ACTUATOR
 	bool "support autofocus on camera without using cci"
-	depends on MSMB_CAMERA
-	help
+ 	depends on MSMB_CAMERA
+ 	help
 	actuator for camera.
-
-config SWITCH_DUAL_MODEM
-	default n
-	bool "Switch UART/USB to AP/CP/CP2"
 
 config TIMA_RKP
        bool "Enable RKP (Realtime Kernel Protection) TIMA feature"
